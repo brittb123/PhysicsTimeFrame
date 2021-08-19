@@ -6,11 +6,11 @@
 
 bool PhysicsGame::startup()
 {
-	m_font = new aie::Font("../bin/font/consoles.ttf", 32);
+	m_renderer = new aie::Renderer2D();
+	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
 	setBackgroundColour(0.2f, 0.3f, 0.0f, 1.0f);
 
-	m_renderer = new aie::Renderer2D();
 	return true;
 }
 

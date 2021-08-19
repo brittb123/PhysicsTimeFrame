@@ -2,22 +2,25 @@
 #include "Input.h"
 #include "Font.h"
 #include "Gizmos.h"
-#include <glm/vec2.hpp>
+#include <glm/ext.hpp>
 
 bool PhysicsGame::startup()
 {
+	aie::Gizmos::create(255U, 255U, 65355U, 65355U);
+
 	m_renderer = new aie::Renderer2D();
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 
 	setBackgroundColour(0.2f, 0.3f, 0.0f, 1.0f);
-
+	m_scene = new PhysicsScene();
+	m_scene->setTimeStep(0.01f);
 	return true;
 }
 
 void PhysicsGame::shutdown()
 {
 	delete m_font;
-
+	delete m_scene;
 	delete m_renderer;
 }
 
@@ -25,6 +28,10 @@ void PhysicsGame::update(float deltatime)
 {
 	//Get the input instance
 	aie::Input* input = aie::Input::getInstance();
+
+	aie::Gizmos::clear();
+
+	m_scene->update(deltatime);
 
 	//Exit on esc
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -38,6 +45,21 @@ void PhysicsGame::draw()
 	clearScreen();
 
 	m_renderer->begin();
+
+	//Draws the scene
+	m_scene->draw();
+
+	//Draw the Gizmos
+	static float aspectRatio = 16.0f / 9.0f;
+	aie::Gizmos::draw2D(glm::ortho<float>(
+		-100,
+		100,
+		-100 / aspectRatio,
+		100 / aspectRatio,
+		-1.0f,
+	    1.0f
+		));
+	
 
 	//Draws FPS	
 	char fps[32];

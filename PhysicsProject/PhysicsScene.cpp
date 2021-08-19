@@ -1,6 +1,7 @@
 #include "PhysicsScene.h"
 #include "PhysicsObject.h"
 #include "Sphere.h"
+#include "glm/ext.hpp"
 
 PhysicsScene::PhysicsScene() : m_timeStep(0.01f), m_gravity(glm::vec2(0,0))
 {
@@ -35,8 +36,13 @@ void PhysicsScene::update(float deltatime)
 		}
 		accumaltedtime -= m_timeStep;
 
-		for (auto outer = m_actors.begin(); outer != --m_actors.end(); outer++) {
-			for (auto inner = ++outer; inner != m_actors.end(); inner++) {
+		auto outerEnd = m_actors.end();
+		outerEnd--;
+		for (auto outer = m_actors.begin(); outer != outerEnd; outer++) {
+			auto innerStart = outer;
+			innerStart++;
+			for (auto inner = innerStart; inner != m_actors.end(); inner++) {
+
 
 				PhysicsObject* object1 = *outer;
 				PhysicsObject* object2 = *inner;
@@ -44,8 +50,6 @@ void PhysicsScene::update(float deltatime)
 				//CollisionCheck
 				sphereToSphere(dynamic_cast<Sphere*>(object1), dynamic_cast<Sphere*>(object2));
 			}
-		
-				
 
 		}
 	}
@@ -60,5 +64,20 @@ void PhysicsScene::draw()
 
 bool PhysicsScene::sphereToSphere(Sphere* Sphere1, Sphere* Sphere2)
 {
+
+	glm::vec2 position1 = Sphere1->getPosition();
+	glm::vec2 position2 = Sphere2->getPosition();
+	glm::vec2 DistanceVec = position1 - position2;
+	float distance = glm::sqrt(DistanceVec.x * DistanceVec.x + DistanceVec.y + DistanceVec.y);
+	
+
+	if (Sphere1->getRadius() + Sphere2->getRadius() >= distance)
+	{
+		
+		Sphere1->applyForce(-(Sphere1->getVelocity()) * Sphere1->getMass());
+		Sphere2->applyForce(-(Sphere2->getVelocity()) * Sphere2->getMass());
+		return true;
+	}
+	
 	return false;
 }

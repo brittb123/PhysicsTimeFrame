@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "Gizmos.h"
 #include "Sphere.h"
+#include "Plane.h"
 #include <glm/ext.hpp>
 
 bool PhysicsGame::startup()
@@ -16,14 +17,18 @@ bool PhysicsGame::startup()
 	m_scene = new PhysicsScene();
 	m_scene->setTimeStep(0.01f);
 
+	// Adds the sphere to the scene
 	Sphere* ball = new Sphere(glm::vec2(-20, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
 	m_scene->addActor(ball);
-	ball->applyForce(glm::vec2(5, 0));
-	
-	
+
 	Sphere* orb = new Sphere(glm::vec2(20, 0), glm::vec2(), 1, 4, glm::vec4(0.2f, 0.8f, 0.8f, 1.0f));
+	ball->applyForce(glm::vec2(5, 0));
 
 	m_scene->addActor(orb);
+
+	// Adds the plane to the scene
+	Plane* ground = new Plane(glm::vec2(0.0f, 1.0f), -30.0f, glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+	m_scene->addActor(ground);
 	return true;
 }
 

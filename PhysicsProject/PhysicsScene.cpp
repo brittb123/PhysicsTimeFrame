@@ -64,7 +64,7 @@ void PhysicsScene::draw()
 
 bool PhysicsScene::sphereToSphere(Sphere* Sphere1, Sphere* Sphere2)
 {
-
+	
 	glm::vec2 position1 = Sphere1->getPosition();
 	glm::vec2 position2 = Sphere2->getPosition();
 	glm::vec2 DistanceVec = position1 - position2;

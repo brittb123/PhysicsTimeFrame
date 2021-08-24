@@ -145,8 +145,7 @@ bool PhysicsScene::sphereToSphere(PhysicsObject* object1, PhysicsObject* object2
 		if (Sphere1->getRadius() + Sphere2->getRadius() >= distance)
 		{
 
-			Sphere1->applyForce(-(Sphere1->getVelocity()) * Sphere1->getMass());
-			Sphere2->applyForce(-(Sphere2->getVelocity()) * Sphere2->getMass());
+			Sphere1->resolveCollision(Sphere2);
 			return true;
 		}
 

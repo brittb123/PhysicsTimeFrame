@@ -5,7 +5,7 @@ enum class ShapeType {
 	PLANE = 0,
 	SPHERE,
 	BOX,
-	Length
+	LENGTH
 };
 
 class PhysicsObject

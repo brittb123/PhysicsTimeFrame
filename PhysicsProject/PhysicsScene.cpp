@@ -12,6 +12,16 @@ PhysicsScene::~PhysicsScene()
 {
 }
 
+
+typedef bool(*collisionCheck)(PhysicsObject*, PhysicsObject*);
+
+
+static collisionCheck collisionFunctionArray[] = {
+	PhysicsScene::planeToPlane, PhysicsScene::planeToSphere, PhysicsScene::planeToBox,
+	PhysicsScene::sphereToPlane, PhysicsScene::sphereToSphere, PhysicsScene::sphereToBox,
+	PhysicsScene::boxToPlane, PhysicsScene::boxToSphere, PhysicsScene::boxToBox
+};
+
 void PhysicsScene::addActor(PhysicsObject* actor)
 {
 	m_actors.insert(actor);
@@ -21,6 +31,8 @@ void PhysicsScene::removeActor(PhysicsObject* actor)
 {
 	m_actors.erase(actor);
 }
+
+
 
 void PhysicsScene::update(float deltatime)
 {
@@ -48,10 +60,17 @@ void PhysicsScene::update(float deltatime)
 
 				PhysicsObject* object1 = *outer;
 				PhysicsObject* object2 = *inner;
+			
 				
-				//CollisionCheck
-				sphereToPlane(object1, object2);
-				planeToSphere(object1, object2);
+				int shape1 = (int)(object1->getShapeID());
+				int shape2 = (int)(object2->getShapeID());
+				//i = (y * w) + x
+				int i = (shape1 * (int)ShapeType::LENGTH) + shape2;
+				
+				collisionCheck collisionFn = collisionFunctionArray[i];
+				if (collisionFn) {
+					collisionFn(object1, object2);
+				}
 			}
 
 		}
@@ -72,7 +91,7 @@ bool PhysicsScene::planeToPlane(PhysicsObject* object1, PhysicsObject* object2)
 
 bool PhysicsScene::planeToSphere(PhysicsObject* object1, PhysicsObject* object2)
 {
- return sphereToPlane(object1, object2);
+ return sphereToPlane(object2, object1);
 }
 
 bool PhysicsScene::planeToBox(PhysicsObject* object1, PhysicsObject* object2)

@@ -39,6 +39,7 @@ void PhysicsGame::shutdown()
 	delete m_font;
 	delete m_scene;
 	delete m_renderer;
+	
 }
 
 void PhysicsGame::update(float deltatime)

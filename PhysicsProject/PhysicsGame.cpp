@@ -24,12 +24,12 @@ bool PhysicsGame::startup()
 	m_scene->addActor(ball);
 
 	Sphere* orb = new Sphere(glm::vec2(20, 0), glm::vec2(), 1, 4, glm::vec4(0.2f, 0.8f, 0.8f, 1.0f));
-	/*ball->applyForce(glm::vec2(5, 0));*/
+	//ball->applyForce(glm::vec2(10, 0));
 
 	m_scene->addActor(orb);
 
 	// Adds the plane to the scene
-	Plane* ground = new Plane(glm::vec2(0.2f, 1.0f), -30.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
+	Plane* ground = new Plane(glm::vec2(0.0f, 1.0f), -30.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
 	m_scene->addActor(ground);
 	return true;
 }

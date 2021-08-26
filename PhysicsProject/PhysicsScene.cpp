@@ -120,7 +120,7 @@ bool PhysicsScene::sphereToPlane(PhysicsObject* object1, PhysicsObject* object2)
 
 		if (sphereToPlaneDistance <= 0)
 		{
-			sphere->applyForce(-sphere->getVelocity() * sphere->getMass());
+			plane->resolveCollision(sphere);
 			return true;
 		}
 		
@@ -145,8 +145,7 @@ bool PhysicsScene::sphereToSphere(PhysicsObject* object1, PhysicsObject* object2
 		if (Sphere1->getRadius() + Sphere2->getRadius() >= distance)
 		{
 
-			Sphere1->applyForce(-(Sphere1->getVelocity()) * Sphere1->getMass());
-			Sphere2->applyForce(-(Sphere2->getVelocity()) * Sphere2->getMass());
+			Sphere1->resolveCollision(Sphere2);
 			return true;
 		}
 

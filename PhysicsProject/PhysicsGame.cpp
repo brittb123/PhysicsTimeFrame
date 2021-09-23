@@ -17,20 +17,39 @@ bool PhysicsGame::startup()
 	m_scene = new PhysicsScene();
 	m_scene->setTimeStep(0.01f);
 	
-	m_scene->setGravity({ 0.0f, -3.0f });
+
 
 	// Adds the sphere to the scene
-	Sphere* ball = new Sphere(glm::vec2(-20, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+	Sphere* ball = new Sphere(glm::vec2(-29, 0), glm::vec2(), 1, 4, glm::vec4(0.2f, 0.8f, 0.8f, 1.0f));
 	m_scene->addActor(ball);
 
-	Sphere* orb = new Sphere(glm::vec2(20, 0), glm::vec2(), 1, 4, glm::vec4(0.2f, 0.8f, 0.8f, 1.0f));
-	//ball->applyForce(glm::vec2(10, 0));
-
+	Sphere* orb = new Sphere(glm::vec2(20, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
 	m_scene->addActor(orb);
 
+	Sphere* ball2 = new Sphere(glm::vec2(33, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+	m_scene->addActor(ball2);
+
+	Sphere* ball3 = new Sphere(glm::vec2(5, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+	m_scene->addActor(ball3);
+
+	Sphere* ball4 = new Sphere(glm::vec2(-10, 0), glm::vec2(), 1, 4, glm::vec4(0.8f, 0.2f, 0.2f, 1.0f));
+	m_scene->addActor(ball4);
+
 	// Adds the plane to the scene
-	Plane* ground = new Plane(glm::vec2(0.0f, 1.0f), -30.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
+	Plane* ground = new Plane(glm::vec2(0.0f, 1.0f), -50.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
+
+	Plane* ground2 = new Plane(glm::vec2(0.0f, -4.0f), -50.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
 	m_scene->addActor(ground);
+	m_scene->addActor(ground2);
+
+	Plane* wall = new Plane(glm::vec2(3.0f, 0.0f), -90.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
+	m_scene->addActor(wall);
+
+	Plane* wall2 = new Plane(glm::vec2(-3.0f, 0.0f), -80.0f, glm::vec4(0.5f, 0.2f, 0.8f, 1.0f));
+	m_scene->addActor(wall2);
+
+	ball->applyForce({ 20, 0 });
+
 	return true;
 }
 
@@ -56,6 +75,12 @@ void PhysicsGame::update(float deltatime)
 	{
 		quit();
 	}
+
+	if (input->isKeyDown(aie::INPUT_KEY_R)) 
+	{
+		startup();
+	}
+
 }
 
 void PhysicsGame::draw()
